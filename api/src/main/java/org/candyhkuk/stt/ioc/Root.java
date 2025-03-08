@@ -2,6 +2,7 @@ package org.candyhkuk.stt.ioc;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.candyhkuk.stt.Bootstrap;
 import org.candyhkuk.stt.audio.AudioController;
 import org.candyhkuk.stt.audio.AudioDAO;
 import org.candyhkuk.stt.jetty.BeforeAfterRequest;
@@ -31,7 +32,8 @@ public class Root {
                 BeforeAfterRequest.class,
                 HttpServer.class,
                 AudioDAO.class,
-                AudioController.class
+                AudioController.class,
+                Bootstrap.class
         ));
         Root.injector = injector;
         return injector;

@@ -40,7 +40,17 @@ public class HttpServer {
 
         xHandler.setHandler(context);
 
-        ServletHolder servletHolder = context.addServlet(AudioController.class);
+        ServletHolder servletHolder = context.addServlet(AudioController.class, "/audio/*");
+        servletHolder.setInitParameter("maxItems", "128");
+
+        server.start();
+        LOG.info("Server started on port {}", port);
+    }
+
+    public void stop() throws Exception {
+        LOG.info("Stopping server");
+        server.stop();
+        LOG.info("Server stopped");
     }
 
 }

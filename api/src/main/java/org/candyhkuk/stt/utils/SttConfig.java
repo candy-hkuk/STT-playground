@@ -9,6 +9,7 @@ import java.util.Properties;
 public class SttConfig {
     private static final Logger LOG = LogManager.getLogger(SttConfig.class);
     public static final String ASSEMBLY_AI_KEY = "assemblyai.key";
+    public static final String HTTP_SERVER_PORT = "http.server.port";
 
     private SttConfig(){}
 
@@ -46,6 +47,10 @@ public class SttConfig {
 
     public static String get(String key){
         return props.getProperty(key, null);
+    }
+
+    public static String getOrDefault(String key, String value){
+        return props.getProperty(key, value);
     }
 
     public static boolean has(String key){
