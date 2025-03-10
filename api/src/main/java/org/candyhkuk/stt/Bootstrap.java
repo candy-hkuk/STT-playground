@@ -10,7 +10,7 @@ import org.candyhkuk.stt.utils.SttConfig;
 @Singleton
 public class Bootstrap {
     private static final Logger LOG = LogManager.getLogger(Bootstrap.class);
-    private HttpServer server;
+    private final HttpServer server;
 
     @Inject
     public Bootstrap(HttpServer server) {

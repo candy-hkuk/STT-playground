@@ -1,2 +1,2 @@
 # STT-playground
- Simple STT ecosystem
+ Simple STT ecosystem with community MongoDB as the persistent layer
