@@ -1,8 +1,10 @@
 package org.candyhkuk.stt.jetty;
 
+import jakarta.inject.Singleton;
 import jakarta.servlet.DispatcherType;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.candyhkuk.stt.ai.TranscribeController;
 import org.candyhkuk.stt.audio.AudioController;
 import org.eclipse.jetty.ee10.servlet.ServletContextHandler;
 import org.eclipse.jetty.ee10.servlet.ServletHolder;
@@ -13,11 +15,12 @@ import org.eclipse.jetty.server.handler.CrossOriginHandler;
 import java.util.EnumSet;
 import java.util.Set;
 
+@Singleton
 public class HttpServer {
     private static final Logger LOG = LogManager.getLogger(HttpServer.class);
 
-    private Server server;
-    private ServerConnector connector;
+    private final Server server;
+    private final ServerConnector connector;
 
     public HttpServer(){
         this.server = new Server();
@@ -40,8 +43,9 @@ public class HttpServer {
 
         xHandler.setHandler(context);
 
-        ServletHolder servletHolder = context.addServlet(AudioController.class, "/audio/*");
-        servletHolder.setInitParameter("maxItems", "128");
+        context.addServlet(AudioController.class, "/audio/*")
+                .setInitParameter("maxItems", "128");
+        context.addServlet(TranscribeController.class, "/transcribe");
 
         server.start();
         LOG.info("Server started on port {}", port);

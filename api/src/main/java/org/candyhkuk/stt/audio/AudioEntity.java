@@ -5,29 +5,35 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import java.time.Instant;
 
 public class AudioEntity {
-    private int id;
 
-    @JsonProperty("src")
+    public static final String SRC = "src";
+    public static final String SUBMIT_TIME = "submitTime";
+    public static final String TRANSCRIPT = "transcript";
+
+
+    private String id;
+
+    @JsonProperty(SRC)
     private String src;
 
-    @JsonProperty("submitTime")
+    @JsonProperty(SUBMIT_TIME)
     private Instant submitTime;
 
-    @JsonProperty("transcription")
-    private String transcription;
+    @JsonProperty(TRANSCRIPT)
+    private String transcript;
 
-    public AudioEntity(int id, String src, Instant submitTime, String transcription){
+    public AudioEntity(String id, String src, Instant submitTime, String transcript){
         this.id = id;
         this.src = src;
         this.submitTime = submitTime;
-        this.transcription = transcription;
+        this.transcript = transcript;
     }
 
-    public AudioEntity(String src, Instant submitTime, String transcription){
-        this(-1, src, submitTime, transcription);
+    public AudioEntity(String src, Instant submitTime, String transcript){
+        this("", src, submitTime, transcript);
     }
 
-    public int getId(){
+    public String getId(){
         return id;
     }
 
@@ -39,8 +45,8 @@ public class AudioEntity {
         return submitTime;
     }
 
-    public String getTranscription(){
-        return transcription;
+    public String getTranscript(){
+        return transcript;
     }
 
     @Override
@@ -49,7 +55,7 @@ public class AudioEntity {
                 + "id=" + id
                 + ", src=" + src
                 + ", submitTime=" + submitTime
-                + ", transcript=" + transcription
+                + ", transcript=" + transcript
                 + "}";
     }
 

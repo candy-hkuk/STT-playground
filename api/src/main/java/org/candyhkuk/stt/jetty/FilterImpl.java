@@ -5,27 +5,29 @@ import jakarta.servlet.annotation.WebFilter;
 import jakarta.servlet.http.HttpServletRequest;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.candyhkuk.stt.ioc.Root;
 
 import java.io.IOException;
+import java.util.Random;
 
 @WebFilter("/*")
 public class FilterImpl implements Filter {
-    BeforeAfterRequest beforeAfterRequest;
+    private final BeforeAfterRequest beforeAfterRequest;
+    private final int instanceId;
     private final Logger LOG = LogManager.getLogger(FilterImpl.class);
 
     public FilterImpl(){
-        this.beforeAfterRequest = Root.getInjector().getInstance(BeforeAfterRequest.class);
+        this.beforeAfterRequest = new BeforeAfterRequest();
+        instanceId = new Random().nextInt();
     }
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
-
+        LOG.debug("Initializing filter configurations for ID({}): {}", instanceId, filterConfig);
     }
 
     @Override
     public void destroy(){
-
+        LOG.debug("Destroying filter ID({})", instanceId);
     }
 
     @Override

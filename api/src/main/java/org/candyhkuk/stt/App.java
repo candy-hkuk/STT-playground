@@ -2,9 +2,12 @@ package org.candyhkuk.stt;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.candyhkuk.stt.ioc.Root;
+import org.candyhkuk.stt.jetty.HttpServer;
 import org.candyhkuk.stt.utils.SttConfig;
-import org.int4.dirk.api.Injector;
+
+import java.time.Duration;
+import java.time.temporal.ChronoUnit;
+import java.util.Arrays;
 
 public final class App {
     private static final Logger LOG = LogManager.getLogger(App.class);
@@ -13,15 +16,13 @@ public final class App {
         LOG.info("Starting App");
         setConfig(args);
 
-        Injector injector = Root.setting();
+        HttpServer server = new HttpServer();
 
-        var bootstrap = injector.getInstance(Bootstrap.class);
-        bootstrap.initialize();
-        try {
-            Thread.sleep(5000);
-            bootstrap.destroy();
-        } catch(Exception e){
-            LOG.error("Failed", e);
+        server.start(8080);
+
+        if(Arrays.asList(args).contains("--test")){
+            Thread.sleep(Duration.of(1, ChronoUnit.HOURS));
+            server.stop();
         }
     }
 

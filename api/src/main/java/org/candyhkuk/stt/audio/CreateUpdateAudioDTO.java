@@ -21,6 +21,16 @@ public class CreateUpdateAudioDTO {
         this.transcript = transcript;
     }
 
+    public CreateUpdateAudioDTO(
+            String src,
+            Instant submitTime,
+            String transcript
+    ){
+        this.src = src;
+        this.submitTime = submitTime;
+        this.transcript = transcript;
+    }
+
     public String getSrc(){
         return src;
     }

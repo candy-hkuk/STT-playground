@@ -5,6 +5,8 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.net.URL;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -35,6 +37,16 @@ public class SttTranscribeTest {
         String src = "https://assembly.ai/news.mp4";
         assertDoesNotThrow(() -> {
             String msg = SttTranscribe.getFromFile(src);
+            System.out.println(msg);
+        });
+    }
+
+    @Tag("integration")
+    @Test
+    void testTranscribeFromInputStream(){
+        String audio = "src/test/resources/harvard.wav";
+        assertDoesNotThrow(() -> {
+            String msg = SttTranscribe.getFromInputStream(new FileInputStream(audio));
             System.out.println(msg);
         });
     }

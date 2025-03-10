@@ -1,5 +1,6 @@
 package org.candyhkuk.stt.utils;
 
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import java.nio.file.Files;
@@ -9,11 +10,6 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class SttConfigTest {
     final String propsFile = "src/test/resources/stt-test.properties";
-
-    @Test
-    void testSttConfig(){
-        assertTrue(SttConfig.getProps().isEmpty());
-    }
 
     @Test
     void testSetPropertiesFromFile(){

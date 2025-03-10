@@ -12,31 +12,39 @@
         <maven.compiler.source>21</maven.compiler.source>
         <maven.compiler.target>21</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <junit.version>5.11.2</junit.version>
+        <junit.version>5.11.3</junit.version>
+        <mockito.version>5.16.0</mockito.version>
         <log4j.version>2.17.1</log4j.version>
         <log4j.scope>compile</log4j.scope>
         <dirk.version>1.0.0-beta1</dirk.version>
-        <main.class>hk.gov.emsd.ccsd.Main</main.class>
+        <main.class>org.candyhkuk.stt.App</main.class>
     </properties>
 
     <dependencyManagement>
-    <dependencies>
-        <dependency>
-            <groupId>org.junit</groupId>
-            <artifactId>junit-bom</artifactId>
-            <version>5.11.3</version>
-            <type>pom</type>
-            <scope>import</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.logging.log4j</groupId>
-            <artifactId>log4j-transform-bom</artifactId>
-            <version>0.2.0</version>
-            <scope>import</scope>
-            <type>pom</type>
-        </dependency>
-    </dependencies>
-</dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.junit</groupId>
+                <artifactId>junit-bom</artifactId>
+                <version>${junit.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.mockito</groupId>
+                <artifactId>mockito-bom</artifactId>
+                <version>${mockito.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.logging.log4j</groupId>
+                <artifactId>log4j-transform-bom</artifactId>
+                <version>0.2.0</version>
+                <scope>import</scope>
+                <type>pom</type>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 
     <dependencies>
         <dependency>
@@ -50,11 +58,6 @@
             <version>12.0.13</version>
         </dependency>
 
-        <dependency>
-            <groupId>org.int4.dirk</groupId>
-            <artifactId>dirk-jsr330</artifactId>
-            <version>${dirk.version}</version>
-        </dependency>
         <dependency>
             <groupId>jakarta.inject</groupId>
             <artifactId>jakarta.inject-api</artifactId>
@@ -71,6 +74,11 @@
             <groupId>org.mongodb</groupId>
             <artifactId>mongodb-driver-sync</artifactId>
             <version>5.3.1</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.datatype</groupId>
+            <artifactId>jackson-datatype-jsr310</artifactId>
+            <version>2.18.3</version>
         </dependency>
 
         <dependency>
@@ -94,6 +102,16 @@
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-core</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-junit-jupiter</artifactId>
             <scope>test</scope>
         </dependency>
 
@@ -257,6 +275,10 @@
                 <version>3.5.2</version>
                 <configuration>
                     <excludedGroups>write | integration</excludedGroups>
+                    <argLine>
+                        -javaagent:${settings.localRepository}/org/mockito/mockito-core/${mockito.version}/mockito-core-${mockito.version}.jar
+                        -Xshare:off
+                    </argLine>
                 </configuration>
             </plugin>
         </plugins>

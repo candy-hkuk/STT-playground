@@ -1,5 +1,6 @@
 package org.candyhkuk.stt;
 
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
@@ -26,5 +27,10 @@ public class AppTest {
     @Test
     void testMain(){
         assertDoesNotThrow(() -> App.main("--creds=" + credsPath));
+    }
+
+    @AfterAll
+    static void terminate(){
+
     }
 }
