@@ -11,6 +11,7 @@ kubectl apply -f $SCRIPT_DIR/mongo-pv.yaml
 kubectl apply -f $SCRIPT_DIR/mongo-pv-claim.yaml
 
 # compile customized mongodb configurations
-docker build . -t test/mongodb -f $SCRIPT_DIR/Dockerfile 
+#docker build . -t test/mongodb -f $SCRIPT_DIR/Dockerfile 
 
 # start Mongo pod
+kubectl apply -f $SCRIPT_DIR/mongodb.yaml
