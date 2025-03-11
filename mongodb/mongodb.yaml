@@ -1,0 +1,21 @@
+# Start the mongodb server on k8s
+apiVersion: v1
+kind: Pod
+metadata:
+  name: mongo-stack
+spec:
+  volumes:
+    - name: mongo-pv-store
+      persistentVolumeClaim:
+        claimName: mongo-pv-claim
+  containers:
+    - name: mongodb
+      image: test/mongodb
+      ports:
+        - containerPort: 27017
+          name: datastore 
+      volumeMounts:
+        - mountPath: "/data/db/"
+          name: mongo-pv-store
+
+      
