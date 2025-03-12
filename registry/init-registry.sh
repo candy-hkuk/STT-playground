@@ -1,5 +1,8 @@
 #!/bin/bash
 
+#####################################
+# Generate Certificates             #
+#####################################
 if [ ! -d certs ]; then
 mkdir -p certs
 fi
@@ -23,8 +26,13 @@ openssl req -newkey rsa:2048 \
     -x509 -days 365 \
     -out certs/registry.crt
 
-# create k8s registry to bypass image pull issues
+#################################################
+# Prepare and Deploy private docker repository  #
+#################################################
+# Upload generated certs to k8s' secrets store
 kubectl create secret tls registry-cert \
     --cert=certs/registry.crt \
     --key=certs/registry.key
+
+# initialize registry with public access
 kubectl create -f registry.yaml

@@ -1,3 +1,4 @@
+# Deploy api to kubernetes
 apiVersion: v1 
 kind: Pod 
 metadata:
@@ -13,6 +14,14 @@ spec:
       ports:
         - containerPort: 8080
           name: stt-api-port 
+      volumeMounts: 
+        - name: stt-api-conf
+          mountPath: ./db.properties
+          subPath: db.properties
+          readOnly: true
+        - name: stt-api-creds
+          mountPath: ./creds.properties
+          subPath: tokens
       resources:
         limits:
           cpu: "2.0"
@@ -22,3 +31,10 @@ spec:
           cpu: "0.1"
           memory: "10M"
           ephemeral-storage: "512M"
+  volumes:
+    - name: stt-api-creds
+      secret:
+        secretName: stt-api-creds 
+    - name: stt-api-conf
+      configMap: 
+        name: stt-api-conf
