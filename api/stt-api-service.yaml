@@ -1,0 +1,13 @@
+# expose as service for local testing
+apiVersion: v1
+kind: Service
+metadata:
+  name: stt-api-service
+spec:
+  selector:
+    app.kubernetes.io/name: stt-api
+  ports:
+  - name: stt-api-public
+    protocol: TCP
+    port: 8080
+    targetPort: 8080

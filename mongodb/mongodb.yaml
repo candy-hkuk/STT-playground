@@ -1,6 +1,6 @@
 # Start the mongodb server on k8s
 apiVersion: v1
-kind: Pod
+kind: Deployment
 metadata:
   name: mongo-stack
   labels:
@@ -30,17 +30,3 @@ spec:
           cpu: "0.1"
           memory: "10M"
           ephemeral-storage: "512M"
----
-# Expose as services
-apiVersion: v1
-kind: Service
-metadata:
-  name: mongodb-service
-spec:
-  selector:
-    app.kubernetes.io/name: mongo
-  ports:
-  - name: datastore-public
-    protocol: TCP
-    port: 27017
-    targetPort: datastore

@@ -1,0 +1,13 @@
+# expose as service for local testing
+apiVersion: v1
+kind: Service
+metadata:
+  name: mongodb-service
+spec:
+  selector:
+    app.kubernetes.io/name: mongo
+  ports:
+  - name: datastore-public
+    protocol: TCP
+    port: 27017
+    targetPort: datastore

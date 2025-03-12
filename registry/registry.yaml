@@ -21,7 +21,6 @@ kind: PersistentVolumeClaim
 metadata:
   name: registry-pvc
 spec:
-  storageClassName: longhorn
   resources:
     requests:
       storage: 10Gi
@@ -32,13 +31,13 @@ spec:
 ---
 # Start the mongodb server on k8s
 apiVersion: v1
-kind: Deployment
+kind: Pod
 metadata:
   name: registry
   labels:
-    run: registry
     app.kubernetes.io/name: registry
 spec:
+  automountServiceAccountToken: false
   containers:
     - name: registry
       image: registry:2
@@ -56,7 +55,6 @@ spec:
           readOnly: true
         - name: registry-data
           mountPath: /var/lib/registry
-          subPath: registry
       resources:
         limits:
           cpu: "2.0"
@@ -81,10 +79,12 @@ kind: Service
 metadata:
   name: registry-service
 spec:
+  type: LoadBalancer
   selector:
     app.kubernetes.io/name: registry
   ports:
-  - name: registry-public
-    protocol: TCP
-    port: 5000
-    targetPort: registry
+    - name: registry-tcp
+      protocol: TCP
+      port: 5000
+      targetPort: 5000
+  loadBalancerIP: 10.211.55.250
