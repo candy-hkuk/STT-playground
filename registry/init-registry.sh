@@ -1,6 +1,35 @@
 #!/bin/bash
 
 #####################################
+# Create the registry users         #
+#####################################
+export REGISTRY_USER=admin
+export REGISTRY_PASS=somePassword
+export CREDS_DIR=./creds 
+
+if [ ! -d $CREDS_DIR ]; then
+    mkdir -p $CREDS_DIR 
+fi
+
+docker run --entrypoint htpasswd httpd:2 \
+    -Bbn ${REGISTRY_USER} ${REGISTRY_PASS} \
+    > ${CREDS_DIR}/htpasswd
+
+unset REGISTRY_USER REGISTRY_PASS CREDS_DIR
+
+docker run -itd \
+    -p 5000:5000 \
+    --name registry:2 \
+    -v "$(pwd)/certs:/certs" \
+    -v "$(pwd)/creds:/auth" \
+    -e "REGISTRY_AUTH=htpasswd" \
+    -e "REGISTRY_AUTH_HTPASSWD_REALM=Registry Realm" \
+    -e REGISTRY_AUTH_HTPASSWD_PATH=/auth/htpasswd \
+    registry
+
+exit 0
+
+#####################################
 # Generate Certificates             #
 #####################################
 if [ ! -d certs ]; then

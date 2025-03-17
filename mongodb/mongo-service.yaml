@@ -10,4 +10,5 @@ spec:
   - name: datastore-public
     protocol: TCP
     port: 27017
-    targetPort: datastore
+    targetPort: 27017
+  type: LoadBalancer
