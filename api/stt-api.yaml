@@ -9,8 +9,9 @@ spec:
   automountServiceAccountToken: false
   containers:
     - name: stt-api
-      imagePullPolicy: Never
-      image: test/stt-api
+      imagePullSecrets:
+        - regcred
+      image: "host.docker.internal:5000/test/stt-api"
       ports:
         - containerPort: 8080
           name: stt-api-port 
